@@ -8,8 +8,7 @@ app.set('views', path.join(__dirname, 'lib/views'));
 app.use(express.static(__dirname + '/public'));
 
 // 加载DB配置
-
-// 加载models
+require('./config/mongoose');
 
 // 加载路由
 require('./lib/routes/index.server.routes')(app);
