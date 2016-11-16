@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
 const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 const config = require('./config/config');
 
 const app = express();
@@ -22,6 +23,9 @@ app.use(cookieParser());
 app.use(useragent.express());
 app.use(flash());
 
+// 加载DB配置
+const mongoose = require('./config/mongoose');
+
 // 配置session
 var sess = {
   secret: config.session_secret,
@@ -29,7 +33,8 @@ var sess = {
     maxAge: 60000
   },
   resave: true,
-  saveUninitialized: true
+  saveUninitialized: true,
+  store: new MongoStore({ mongooseConnection: mongoose.connection })
 };
 if (app.get('env') === 'production') {
   app.set('trust proxy', 1)
@@ -37,8 +42,6 @@ if (app.get('env') === 'production') {
 }
 app.use(session(sess));
 
-// 加载DB配置
-require('./config/mongoose');
 
 // 加载路由
 require('./lib/routes/index.server.routes')(app);
