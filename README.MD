@@ -6,7 +6,7 @@
 
 - [ ] How to deploy NodeJS Application ?
   - start it run
-  - make sure it keeps running
+  - make sure it keeps running: systemd
   - How to start NodeJS Application when your server reboots ?
   - 不同运行环境下加载不同的配置信息: pm2.json
 

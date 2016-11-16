@@ -1,11 +1,25 @@
 const express = require('express');
-const app = express();
 const path = require('path');
+const compression = require('compression');
+const useragent = require('express-useragent');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const flash = require('connect-flash');
 
+const app = express();
 // 设置配置
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'lib/views'));
 app.use(express.static(__dirname + '/public'));
+
+app.use(compression());
+app.use(useragent.express());
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
+app.use(cookieParser());
+app.use(useragent.express());
+app.use(flash());
+// 配置session
 
 // 加载DB配置
 require('./config/mongoose');
