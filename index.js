@@ -5,6 +5,8 @@ const useragent = require('express-useragent');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
+const session = require('express-session');
+const config = require('./config/config');
 
 const app = express();
 // 设置配置
@@ -19,7 +21,18 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(useragent.express());
 app.use(flash());
+
 // 配置session
+var sess = {
+  secret: config.session_secret,
+  cookie: {}
+};
+
+if (app.get('env') === 'production') {
+  app.set('trust proxy', 1)
+  sess.cookie.secure = true;
+}
+app.use(session(sess));
 
 // 加载DB配置
 require('./config/mongoose');

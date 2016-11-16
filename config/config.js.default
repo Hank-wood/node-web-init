@@ -1,0 +1,5 @@
+module.exports = {
+  db: 'mongodb://node-init:node-init@127.0.0.1:27017/node-init',
+
+  session_secret: "SDF876HJSFDHA89"
+};
