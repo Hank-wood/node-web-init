@@ -25,9 +25,12 @@ app.use(flash());
 // 配置session
 var sess = {
   secret: config.session_secret,
-  cookie: {}
+  cookie: {
+    maxAge: 60000
+  },
+  resave: true,
+  saveUninitialized: true
 };
-
 if (app.get('env') === 'production') {
   app.set('trust proxy', 1)
   sess.cookie.secure = true;
